@@ -1,19 +1,11 @@
 import { useEffect, useRef } from "react";
 import Phaser from "phaser";
-import { createCells } from "../Utils/utils.js";
+import { createBoardCells, createSnake } from "./../Utils/utils";
+import { setCanvasStyles } from "../Utils/setCanvasStyles";
 
 const Game = () => {
   const gameRef = useRef(null);
-  //   const startGame = () => {
-  //     const canvas = canvasRef.current;
-  //     const ctx = canvas.getContext("2d");
-  //     const background = new Image();
-  //     background.src = "/images/background.jpg";
-  //     window.requestAnimationFrame(() => {
-  //       ctx.drawImage(background, 0, 0);
-  //     });
-  //     console.log(background);
-  //   };
+
   useEffect(() => {
     const config = {
       type: Phaser.AUTO,
@@ -29,21 +21,21 @@ const Game = () => {
     function preload() {
       this.load.image("background", "/images/background.png");
       this.load.image("cell", "/images/cell.png");
+      this.load.image("body", "/images/body.png");
     }
 
     function create() {
-      const canvas = game.canvas;
-      const cell = createCells();
-      console.log(cell);
-
-      canvas.style.width = "100%";
-      canvas.style.position = "absolute";
-      canvas.style.top = "50%";
-      canvas.style.left = "50%";
-      canvas.style.transform = "translate(-50%, -50%)";
+      setCanvasStyles.call(this);
+      const boardCells = createBoardCells.call(this);
+      const snakeCells = createSnake(boardCells);
 
       this.add.image(0, 0, "background").setOrigin(0, 0);
-      this.add.image(0, 0, "cell").setOrigin(0, 0);
+      boardCells.forEach((cell) => {
+        this.add.image(cell.x, cell.y, "cell").setOrigin(0, 0);
+      });
+      snakeCells.forEach((cell) => {
+        this.add.image(cell.x, cell.y, "body").setOrigin(0, 0);
+      });
     }
 
     return () => {
