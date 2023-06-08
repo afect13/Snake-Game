@@ -13,17 +13,3 @@ export function createBoardCells() {
   }
   return cell;
 }
-
-export function createSnake(boardCells) {
-  const cells = [];
-  const startCells = [
-    { row: 7, col: 7 },
-    { row: 8, col: 7 },
-  ];
-
-  for (let startCell of startCells) {
-    const cell = boardCells.find((cell) => cell.row === startCell.row && cell.col === startCell.col);
-    cells.push(cell);
-  }
-  return cells;
-}

@@ -1,6 +1,10 @@
 export function setCanvasStyles() {
   const canvas = this.game.canvas;
-  canvas.style.height = "100vh";
+  if (this.sys.game.config.width / this.sys.game.config.height > 640 / 360) {
+    canvas.style.width = "100vw";
+  } else {
+    canvas.style.height = "100vh";
+  }
   canvas.style.position = "absolute";
   canvas.style.top = "50%";
   canvas.style.left = "50%";
