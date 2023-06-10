@@ -1,5 +1,6 @@
-export function createBoardCells() {
-  const cellSize = this.textures.get("cell").source[0].width + 1;
+export function drawCells() {
+  const cellSize = this.textures.get("cell").getSourceImage().width + 1;
+  console.log(cellSize);
   const canvasWidth = this.sys.game.config.width;
   const canvasHeigh = this.sys.game.config.height;
   const size = 15;
@@ -11,5 +12,8 @@ export function createBoardCells() {
       cell.push({ row: row, col: col, x: offsetX + cellSize * col, y: offsetY + cellSize * row });
     }
   }
-  return cell;
+  cell.forEach((cell) => {
+    this.add.image(cell.x, cell.y, "cell").setOrigin(0, 0);
+  });
+  this.boardCells = cell;
 }

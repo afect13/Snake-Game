@@ -1,4 +1,4 @@
-export function generateApple() {
+export function drawApple() {
   if (this.appleSprites) {
     this.appleSprites.destroy();
   }
@@ -14,7 +14,6 @@ export function generateApple() {
   if (availableCells.length > 0) {
     const randomIndex = Math.floor(Math.random() * availableCells.length);
     this.appleCells = availableCells[randomIndex];
-    console.log(this.appleCells);
-    this.appleSprites = this.add.sprite(this.appleCells.x, this.appleCells.y, "apple").setOrigin(0, 0);
+    this.appleSprites = this.add.image(this.appleCells.x, this.appleCells.y, "apple").setOrigin(0, 0);
   }
 }
