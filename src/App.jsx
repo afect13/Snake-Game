@@ -1,7 +1,11 @@
-import Game from "./Pages/Game";
+import Game from "./Components/Game";
 
 const App = () => {
-  return <Game></Game>;
+  return (
+    <div className=" overflow-hidden">
+      <Game></Game>;
+    </div>
+  );
 };
 
 export default App;

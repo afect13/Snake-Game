@@ -1,4 +1,4 @@
-export function drawSnake(generateApple) {
+export function drawSnake(generateApple, setGameOver) {
   if (this.snakeSprites) {
     this.snakeSprites.forEach((sprite) => {
       sprite.destroy();
@@ -46,22 +46,15 @@ export function drawSnake(generateApple) {
     const checkSnakeCell = this.snakeCells.some((cell) => cell.row === row && cell.col === col);
 
     console.log(checkSnakeCell);
-    if (!updateSnakeCell) {
-      // Останавливаем игру когда врезаемся в стенку
+    if (!updateSnakeCell || checkSnakeCell) {
+      // Останавливаем игру когда врезаемся в стенку или себя
       this.hitSound.play();
       this.themeSound.stop();
-      this.game.scene.getScenes().forEach((scene) => {
-        scene.scene.pause();
-      });
-    } else if (checkSnakeCell) {
-      // Останавливаем игру когда врезаемся в себя
-      this.hitSound.play();
-      this.themeSound.stop();
-      this.game.scene.getScenes().forEach((scene) => {
-        scene.scene.pause();
-      });
+      // Останавливаем интервал
+      this.snakeInterval.remove();
+      setGameOver((prev) => !prev);
     } else if (updateSnakeCell) {
-      // Удлиняемся и генерим яблочко
+      // Удлиняемся и генерируем яблочко
       this.snakeCells.unshift(updateSnakeCell);
       if (head.row === this.appleCells.row && head.col === this.appleCells.col) {
         this.eatSound.play();

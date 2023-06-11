@@ -1,28 +1,40 @@
 import Phaser from "phaser";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { imageFiles, imagePath, soundFiles, soundPath } from "../Сonstants/assetPaths";
 import { setScreenDimension } from "../Utils/setScreenDimension";
 import { setCanvasStyles } from "../Utils/setCanvasStyles";
 import { initGame } from "../Utils/initGame";
-import { drawCells } from "./../Utils/drawCells";
+import { drawCells } from "../Utils/drawCells";
 import { drawSnake } from "../Utils/drawSnake";
 import { drawApple } from "../Utils/drawApple";
+import Modal from "./Modal";
 
 const Game = () => {
   const gameRef = useRef(null);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameRestart, setGameRestart] = useState(false);
+  const gameRestartRef = useRef(gameRestart);
+  const handleRestartGame = () => {
+    setGameOver((prev) => !prev);
+    setGameRestart((prev) => !prev);
+  };
+  useEffect(() => {
+    gameRestartRef.current = gameRestart;
+  }, [gameRestart]);
   useEffect(() => {
     const config = {
       type: Phaser.CANVAS,
       width: setScreenDimension("width"),
       height: setScreenDimension("height"),
       parent: gameRef.current,
-
+      pixelArt: true,
       scene: {
         preload: preload,
         create: create,
         update: update,
       },
     };
+
     const game = new Phaser.Game(config);
     function preload() {
       Object.entries(soundFiles).forEach(([key, file]) => {
@@ -37,16 +49,21 @@ const Game = () => {
       setCanvasStyles.call(this);
       initGame.call(this);
       drawCells.call(this);
-      this.time.addEvent({
+      this.snakeInterval = this.time.addEvent({
         delay: 500,
         loop: true,
         callback: () => {
-          drawSnake.call(this, drawApple.bind(this));
+          drawSnake.call(this, drawApple.bind(this), setGameOver);
         },
         callbackScope: this,
       });
     }
     function update() {
+      // Рестарт игры
+      if (gameRestartRef.current) {
+        this.scene.restart();
+        setGameRestart((prev) => !prev);
+      }
       if (this.keyboard.left.isDown && this.movement !== "right" && this.prevMovement !== "right") {
         this.movement = "left";
       } else if (this.keyboard.right.isDown && this.movement !== "left" && this.prevMovement !== "left") {
@@ -59,10 +76,16 @@ const Game = () => {
     }
     return () => {
       game.destroy();
+      // gameRef.current.innerHTML = "";
     };
   }, []);
 
-  return <div ref={gameRef}></div>;
+  return (
+    <>
+      <div ref={gameRef}></div>
+      {gameOver && <Modal restart={handleRestartGame} />}
+    </>
+  );
 };
 
 export default Game;
