@@ -1,5 +1,5 @@
-export const soundPath = "/sounds/";
-export const imagePath = "/images/";
+export const soundPath = process.env.PUBLIC_URL + "/sounds/";
+export const imagePath = process.env.PUBLIC_URL + "/images/";
 export const soundFiles = {
   theme: "theme.mp3",
   eat: "eat.mp3",

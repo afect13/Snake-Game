@@ -1,7 +1,7 @@
 const MainScreen = ({ togglePage }) => {
   return (
     <div
-      style={{ backgroundImage: "url('/images/backgroundmain.png')" }}
+      style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/backgroundmain.png)` }}
       className="flex justify-center items-center  h-screen w-screen  bg-cover"
     >
       <div className="flex flex-col items-center ">
