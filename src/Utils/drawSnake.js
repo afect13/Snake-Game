@@ -20,7 +20,7 @@ export function drawSnake(generateApple, setGameOver) {
     const head = this.snakeCells[0];
     let row;
     let col;
-    // Задаем направление
+
     if (to === "up") {
       row = head.row - 1;
       col = head.col;
@@ -41,7 +41,7 @@ export function drawSnake(generateApple, setGameOver) {
       col = head.col + 1;
       this.prevMovement = "right";
     }
-    // Проверки
+
     const updateSnakeCell = this.boardCells.find((cell) => cell.row === row && cell.col === col);
     const checkSnakeCell = this.snakeCells.some((cell) => cell.row === row && cell.col === col);
 

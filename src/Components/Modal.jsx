@@ -1,4 +1,4 @@
-const Modal = ({ restart }) => {
+const Modal = ({ restart, togglePage }) => {
   return (
     <div class="relative z-10">
       <div class="fixed inset-0 bg-slate-900 bg-opacity-75 transition-opacity"></div>
@@ -19,6 +19,7 @@ const Modal = ({ restart }) => {
                 Play Again
               </button>
               <button
+                onClick={togglePage}
                 type="button"
                 class="inline-flex my-2 w-full uppercase justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 "
               >

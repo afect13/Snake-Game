@@ -9,7 +9,7 @@ import { drawSnake } from "../Utils/drawSnake";
 import { drawApple } from "../Utils/drawApple";
 import Modal from "./Modal";
 
-const Game = () => {
+const Game = ({ togglePage }) => {
   const gameRef = useRef(null);
   const [gameOver, setGameOver] = useState(false);
   const [gameRestart, setGameRestart] = useState(false);
@@ -50,7 +50,7 @@ const Game = () => {
       initGame.call(this);
       drawCells.call(this);
       this.snakeInterval = this.time.addEvent({
-        delay: 500,
+        delay: 300,
         loop: true,
         callback: () => {
           drawSnake.call(this, drawApple.bind(this), setGameOver);
@@ -76,14 +76,13 @@ const Game = () => {
     }
     return () => {
       game.destroy();
-      // gameRef.current.innerHTML = "";
     };
   }, []);
 
   return (
     <>
       <div ref={gameRef}></div>
-      {gameOver && <Modal restart={handleRestartGame} />}
+      {gameOver && <Modal restart={handleRestartGame} togglePage={togglePage} />}
     </>
   );
 };
