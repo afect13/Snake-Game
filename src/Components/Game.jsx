@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { useEffect, useRef, useState } from "react";
-import { imageFiles, imagePath, soundFiles, soundPath } from "../Constants/assetPaths";
+import { imageFiles, imagePath, soundFiles, soundPath } from "../constants/assetPaths";
 import { setScreenDimension } from "../Utils/setScreenDimension";
 import { setCanvasStyles } from "../Utils/setCanvasStyles";
 import { initGame } from "../Utils/initGame";
