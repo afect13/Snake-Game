@@ -6,7 +6,6 @@ export function drawSnake(generateApple, setGameOver) {
   }
 
   if (this.movement === "start") {
-    // Стартовая позиция
     const startCells = [
       { row: 7, col: 7 },
       { row: 8, col: 7 },
@@ -45,16 +44,12 @@ export function drawSnake(generateApple, setGameOver) {
     const updateSnakeCell = this.boardCells.find((cell) => cell.row === row && cell.col === col);
     const checkSnakeCell = this.snakeCells.some((cell) => cell.row === row && cell.col === col);
 
-    console.log(checkSnakeCell);
     if (!updateSnakeCell || checkSnakeCell) {
-      // Останавливаем игру когда врезаемся в стенку или себя
       this.hitSound.play();
       this.themeSound.stop();
-      // Останавливаем интервал
       this.snakeInterval.remove();
       setGameOver((prev) => !prev);
     } else if (updateSnakeCell) {
-      // Удлиняемся и генерируем яблочко
       this.snakeCells.unshift(updateSnakeCell);
       if (head.row === this.appleCells.row && head.col === this.appleCells.col) {
         this.eatSound.play();
@@ -79,7 +74,6 @@ export function drawSnake(generateApple, setGameOver) {
       move("right");
       break;
     default:
-      // Переводим из start в up и генерим первое яблочко
       this.movement = "up";
       generateApple();
       break;
@@ -89,7 +83,6 @@ export function drawSnake(generateApple, setGameOver) {
     let sprite;
     let headSize = this.textures.get("head").source[0].width;
     if (index === 0) {
-      // Логика головы и ее поворота
       sprite = this.add.image(cell.x + headSize / 2, cell.y + headSize / 2, "head").setOrigin(0.5, 0.5);
       if (this.movement === "up") {
         sprite.angle = 0;
@@ -101,7 +94,6 @@ export function drawSnake(generateApple, setGameOver) {
         sprite.angle = 90;
       }
     } else {
-      // Тело
       sprite = this.add.image(cell.x, cell.y, "body").setOrigin(0, 0);
     }
     return sprite;

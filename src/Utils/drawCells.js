@@ -1,6 +1,5 @@
 export function drawCells() {
   const cellSize = this.textures.get("cell").getSourceImage().width + 1;
-  console.log(cellSize);
   const canvasWidth = this.sys.game.config.width;
   const canvasHeigh = this.sys.game.config.height;
   const size = 15;

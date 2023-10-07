@@ -59,7 +59,6 @@ const Game = ({ togglePage }) => {
       });
     }
     function update() {
-      // Рестарт игры
       if (gameRestartRef.current) {
         this.scene.restart();
         setGameRestart((prev) => !prev);
